@@ -19,13 +19,14 @@ use crate::{
 
 mod predefined;
 
+
 /// An immutable context.
 pub trait Context {
     /// The numeric types used for evaluation.
     type NumericTypes: EvalexprNumericTypes;
 
     /// Returns the value that is linked to the given identifier.
-    fn get_value(&self, identifier: &str) -> Option<&Value<Self::NumericTypes>>;
+    fn get_value(&self, identifier: &str) -> Option<Value<Self::NumericTypes>>;
 
     /// Calls the function that is linked to the given identifier with the given argument.
     /// If no function with the given identifier is found, this method returns `EvalexprError::FunctionIdentifierNotFound`.
@@ -113,7 +114,7 @@ pub struct EmptyContext<NumericTypes>(PhantomData<NumericTypes>);
 impl<NumericTypes: EvalexprNumericTypes> Context for EmptyContext<NumericTypes> {
     type NumericTypes = NumericTypes;
 
-    fn get_value(&self, _identifier: &str) -> Option<&Value<Self::NumericTypes>> {
+    fn get_value(&self, _identifier: &str) -> Option<Value<Self::NumericTypes>> {
         None
     }
 
@@ -180,7 +181,7 @@ impl<NumericTypes: EvalexprNumericTypes> Context
 {
     type NumericTypes = NumericTypes;
 
-    fn get_value(&self, _identifier: &str) -> Option<&Value<Self::NumericTypes>> {
+    fn get_value(&self, _identifier: &str) -> Option<Value<Self::NumericTypes>> {
         None
     }
 
@@ -308,8 +309,8 @@ impl<NumericTypes: EvalexprNumericTypes> HashMapContext<NumericTypes> {
 impl<NumericTypes: EvalexprNumericTypes> Context for HashMapContext<NumericTypes> {
     type NumericTypes = NumericTypes;
 
-    fn get_value(&self, identifier: &str) -> Option<&Value<Self::NumericTypes>> {
-        self.variables.get(identifier)
+    fn get_value(&self, identifier: &str) -> Option<Value<Self::NumericTypes>> {
+        self.variables.get(identifier).map(|f| f.clone())
     }
 
     fn call_function(

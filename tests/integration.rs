@@ -1816,7 +1816,7 @@ fn test_hashmap_context_clone_debug() {
     assert_eq!(format!("{:?}", &context), format!("{:?}", &cloned_context));
     assert_eq!(
         cloned_context.get_value("variable_five"),
-        Some(&Value::from_int(5))
+        Some(Value::from_int(5))
     );
     assert_eq!(
         eval_with_context("mult_3 2", &cloned_context),
@@ -2342,7 +2342,7 @@ fn assignment_lhs_is_identifier() {
 
     let mut context = HashMapContext::<DefaultNumericTypes>::new();
     tree.eval_with_context_mut(&mut context).unwrap();
-    assert_eq!(context.get_value("a"), Some(&Value::Int(1)));
+    assert_eq!(context.get_value("a"), Some(Value::Int(1)));
 
     assert!(
         matches!(
@@ -2469,9 +2469,9 @@ fn test_comments() {
 fn test_clear() {
     let mut context = HashMapContext::<DefaultNumericTypes>::new();
     context.set_value("abc".into(), "def".into()).unwrap();
-    assert_eq!(context.get_value("abc"), Some(&("def".into())));
+    assert_eq!(context.get_value("abc"), Some("def".into()));
     context.clear_functions();
-    assert_eq!(context.get_value("abc"), Some(&("def".into())));
+    assert_eq!(context.get_value("abc"), Some("def".into()));
     context.clear_variables();
     assert_eq!(context.get_value("abc"), None);
 

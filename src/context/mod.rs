@@ -272,7 +272,7 @@ impl<NumericTypes: EvalexprNumericTypes> HashMapContext<NumericTypes> {
     ///
     /// let mut context = HashMapContext::<DefaultNumericTypes>::new();
     /// context.set_value("abc".into(), "def".into()).unwrap();
-    /// assert_eq!(context.get_value("abc"), Some(&("def".into())));
+    /// assert_eq!(context.get_value("abc"), Some(("def".into())));
     /// context.clear_variables();
     /// assert_eq!(context.get_value("abc"), None);
     /// ```
@@ -296,7 +296,7 @@ impl<NumericTypes: EvalexprNumericTypes> HashMapContext<NumericTypes> {
     ///
     /// let mut context = HashMapContext::<DefaultNumericTypes>::new();
     /// context.set_value("abc".into(), "def".into()).unwrap();
-    /// assert_eq!(context.get_value("abc"), Some(&("def".into())));
+    /// assert_eq!(context.get_value("abc"), Some(("def".into())));
     /// context.clear();
     /// assert_eq!(context.get_value("abc"), None);
     /// ```

@@ -342,6 +342,8 @@ fn str_to_partial_tokens<NumericTypes: EvalexprNumericTypes>(
     Ok(result)
 }
 
+pub const RESPECT_INTS: bool = false;
+
 /// Resolves all partial tokens by converting them to complex tokens.
 fn partial_tokens_to_tokens<NumericTypes: EvalexprNumericTypes>(
     mut tokens: &[PartialToken<NumericTypes>],
@@ -402,7 +404,7 @@ fn partial_tokens_to_tokens<NumericTypes: EvalexprNumericTypes>(
             },
             PartialToken::Literal(literal) => {
                 cutoff = 1;
-                if let Ok(number) = parse_dec_or_hex::<NumericTypes>(&literal) {
+                if let Ok(number) = parse_dec_or_hex::<NumericTypes>(&literal) && RESPECT_INTS {
                     Some(Token::Int(number))
                 } else if let Ok(number) = literal.parse::<NumericTypes::Float>() {
                     Some(Token::Float(number))
